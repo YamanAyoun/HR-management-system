@@ -4,12 +4,12 @@ let employeeArr = [];
 let form = document.getElementById(`employeeForm`);
 form.addEventListener(`submit`, addNewEmployee)
 
-function Employee(id, fullName, department, level, imageURL,salary) {
+function Employee(id, fullName, department, level, imageURL) {
     this.id = id;
     this.fullName = fullName;
     this.department = department;
     this.level = level;
-    this.imageURL = imageURL;
+    this.imageURL = `./img/Employee.png`;
     this.salary = 0;
     employeeArr.push(this)
   }
@@ -30,9 +30,9 @@ function Employee(id, fullName, department, level, imageURL,salary) {
     if(this.level == 'Senior'){
       this.salary = randomNumber(1500,2000)-(randomNumber(1500,2000)*0.075);
     }else if(this.level == 'Mid-Senior'){
-      this.salary = randomNumber(1000,1500)-(randomNumber(1000,1500));
+      this.salary = randomNumber(1000,1500)-(randomNumber(1000,1500)*0.075);
     }else if(this.level == 'Junior'){
-      this.salary = randomNumber(500,1000)-(randomNumber(500,1000));
+      this.salary = randomNumber(500,1000)-(randomNumber(500,1000)*0.075);
     }
     return this.salary;
   }
@@ -53,14 +53,18 @@ function Employee(id, fullName, department, level, imageURL,salary) {
     const emDiv = document.createElement('div');
     container.appendChild(emDiv);
   
-    
-    const employeeID = document.createElement('p');
-    employeeID.textContent = `Employee ID: ${generateEmployeeID()}`;
-    container.appendChild(employeeID);
+    const emImage = document.createElement('img');
+    emDiv.appendChild(emImage);
+    emImage.src = this.imageURL;
 
-    const emH1 = document.createElement('h2');
-    emH1.textContent = `Employee Name: ${this.fullName}`;
+    const emH1 = document.createElement('p');
+    emH1.textContent = `Name: ${this.fullName}`;
     emDiv.appendChild(emH1);
+
+    const employeeID = document.createElement('p');
+    employeeID.textContent = `ID: ${generateEmployeeID()}`;
+    emDiv.appendChild(employeeID);
+
 
     const emDepartment = document.createElement('p');
     emDepartment.textContent = `Department: ${this.department}`;
@@ -68,34 +72,35 @@ function Employee(id, fullName, department, level, imageURL,salary) {
 
     const employeeLevel = document.createElement('p');
     employeeLevel.textContent = `Level: ${this.level}`;
-    container.appendChild(employeeLevel);
+    emDiv.appendChild(employeeLevel);
 
-    const emImage = document.createElement('img');
-    emDiv.appendChild(emImage);
-    emImage.src = this.imageURL;
     
-    const emSalary = document.createElement('h3');
+    const emSalary = document.createElement('p');
     emDiv.appendChild(emSalary);
-    emSalary.textContent = `${this.salary}`
+    emSalary.textContent = `Salary: ${this.calculateSalary()}`
     
   }
 
   function addNewEmployee(event){
     event.preventDefault();
-    let id = event.target.id.value;
+    
     let fullName = event.target.fullName.value;
     let department = event.target.department.value;
     let level = event.target.id.value;
     let imageURL = event.target.id.value;
 
-    let newEmp = new Employee(id, fullName, department, level,imageURL)
+    let newEmp = new Employee( fullName, department, level,imageURL)
     
+    newEmp.calculateSalary();
     newEmp.render();
   }
+  console.log(employeeArr);
 
   for(let i = 0; i < employeeArr.length; i++){
-    document.write(`<hr>`);
+    
     employeeArr[i].render();
+    
+    
   }
 
   
