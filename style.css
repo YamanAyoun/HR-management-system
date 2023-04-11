@@ -1,7 +1,11 @@
-
+*{
+  margin: 0%;
+  padding: 0%;
+}
 body {
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
+    
   }
   
   
@@ -15,6 +19,8 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: space-between;
   }
   
   nav li {
@@ -59,3 +65,6 @@ body {
     text-decoration: underline;
   }
   
+  #container div{
+    align-items: center;
+  }
