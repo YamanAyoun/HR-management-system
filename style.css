@@ -109,3 +109,10 @@ body {
     padding: 12px;
     border-radius: 4px;
   }
+
+  #table td, th{
+    border-style: solid;
+    border-color: rgb(85, 160, 160);
+    background-color: rgb(194, 185, 202);
+    padding: 10px;
+  }
