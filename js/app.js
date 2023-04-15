@@ -45,21 +45,31 @@ function generateEmployeeID() {
   return id;
 }
 
-Employee.prototype.render = function () {
+ function render() {
 
   const container = document.getElementById('container')
 
   const emDiv = document.createElement('div');
   container.appendChild(emDiv);
 
+   
+   getEmployee()
+
+   
+   if(employeeArr == null){
+       employeeArr = [];
+   } 
+
+  for(let i = 0; i < employeeArr.length; i++){
+    
   const emImage = document.createElement('img');
   emDiv.appendChild(emImage);
-  emImage.src = `./img/${this.fullName}.png`
+  emImage.src = `./img/${employeeArr[i].fullName}.png`
   emImage.alt = `Employee image`;
   
 
   const emH1 = document.createElement('p');
-  emH1.textContent = `Name: ${this.fullName}`;
+  emH1.textContent = `Name: ${employeeArr[i].fullName}`;
   emDiv.appendChild(emH1);
 
   const employeeID = document.createElement('p');
@@ -68,22 +78,23 @@ Employee.prototype.render = function () {
 
 
   const emDepartment = document.createElement('p');
-  emDepartment.textContent = `Department: ${this.department}`;
+  emDepartment.textContent = `Department: ${employeeArr[i].department}`;
   emDiv.appendChild(emDepartment);
 
   const employeeLevel = document.createElement('p');
-  employeeLevel.textContent = `Level: ${this.level}`;
+  employeeLevel.textContent = `Level: ${employeeArr[i].level}`;
   emDiv.appendChild(employeeLevel);
 
 
   const emSalary = document.createElement('p');
   emDiv.appendChild(emSalary);
-  emSalary.textContent = `Salary: ${this.calculateSalary()}`
+  emSalary.textContent = `Salary: ${employeeArr[i]}`;
 
+}
 }
 
 function addNewEmployee(event) {
-  event.preventDefault();
+  // event.preventDefault();
 
   let fullName = event.target.fullName.value;
   let department = event.target.department.value;
@@ -92,8 +103,13 @@ function addNewEmployee(event) {
 
   let newEmp = new Employee(fullName, department, level, imageURL)
 
+  console.log('allEmployee Arr', employeeArr);
+
+  let jsonArr = JSON.stringify(employeeArr);
+  localStorage.setItem('Employees', jsonArr)
+
   newEmp.calculateSalary();
-  newEmp.render();
+  // newEmp.render();
 }
 
 
@@ -105,3 +121,12 @@ for (let i = 0; i < employeeArr.length; i++) {
 }
 
 
+
+function getEmployee(){
+  let jsonArr = localStorage.getItem('Employees');
+  let dataFromStorage = JSON.parse(jsonArr);
+  employeeArr = dataFromStorage;
+}
+
+getEmployee();
+render();
